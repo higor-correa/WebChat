@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebChat.Domain\WebChat.Domain.csproj" />
+    <ProjectReference Include="..\WebChat.Security.Domain\WebChat.Security.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

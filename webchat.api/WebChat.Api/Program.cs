@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using WebChat.Api.Hubs;
+using WebChat.API.Configurations;
+using WebChat.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,7 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
 var app = builder.Build();
 
@@ -59,6 +63,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 app.UseAuthorization();
+app.UseMiddleware<ContextMiddleware>();
 app.MapControllers();
 
 app.UseEndpoints(x =>
