@@ -9,9 +9,7 @@ public static class UserMappings
     {
         return new UserDTO
         {
-            Email = user.Email,
-            Name = user.Name,
-            Surname = user.Surname,
+            Username = user.Username,
             Id = user.Id,
         };
     }

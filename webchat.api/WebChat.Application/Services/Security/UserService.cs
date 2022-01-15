@@ -6,25 +6,23 @@ namespace WebChat.Application.Services.Security;
 
 public class UserService : IUserService
 {
-    private readonly IUserSearcher _UserSearcher;
+    private readonly IUserSearcher _userSearcher;
 
     public UserService(IUserSearcher UserSearcher)
     {
-        _UserSearcher = UserSearcher;
+        _userSearcher = UserSearcher;
     }
 
     public async Task<UserDTO?> GetUserAsync(string email, string passwordHashed)
     {
-        var user = await _UserSearcher.GetForLoginAsync(email, passwordHashed);
+        var user = await _userSearcher.GetForLoginAsync(email, passwordHashed);
 
         return user == null 
             ? default
             : new()
             {
                 Id = user.Id,
-                Name = user.Name,
-                Surname = user.Surname,
-                Email = user.Email,
+                Username = user.Username,
             };
     }
 }

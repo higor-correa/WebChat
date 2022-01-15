@@ -1,7 +1,6 @@
 ﻿using WebChat.Domain.Employees.Interfaces;
 using WebChat.Domain.Users.DTOs;
 using WebChat.Domain.Users.Entities;
-using WebChat.Domain.Employees.Interfaces;
 
 namespace WebChat.Domain.Users.Services;
 
@@ -16,7 +15,7 @@ public class UserCreator : IUserCreator
 
     public async Task<User> CreateAsync(CreateUserDTO createUserDTO)
     {
-        var user = new User(createUserDTO.Name, createUserDTO.Surname, createUserDTO.Email, createUserDTO.Password);
+        var user = new User(createUserDTO.Username, createUserDTO.Password);
 
         await _userRepository.CreateAsync(user);
 

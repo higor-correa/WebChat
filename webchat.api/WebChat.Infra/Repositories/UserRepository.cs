@@ -12,6 +12,6 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
 
     public Task<User?> GetForLoginAsync(string email, string passwordHashed)
     {
-        return Set.Where(x => x.Email == email && x.PasswordHash == passwordHashed).FirstOrDefaultAsync();
+        return Set.Where(x => x.Username == email && x.PasswordHash == passwordHashed).FirstOrDefaultAsync();
     }
 }

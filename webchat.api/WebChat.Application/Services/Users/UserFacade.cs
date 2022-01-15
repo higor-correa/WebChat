@@ -9,11 +9,12 @@ public class UserFacade : IUserFacade
 {
     private readonly IUserCreator _userCreator;
     private readonly IPasswordHasher _passwordHasher;
-    
 
-    public UserFacade(IUserCreator userCreator)
+
+    public UserFacade(IUserCreator userCreator, IPasswordHasher passwordHasher)
     {
         _userCreator = userCreator;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<UserDTO> CreateAsync(CreateUserDTO userDTO)
