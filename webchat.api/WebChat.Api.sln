@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Api", "WebChat.Api\WebChat.Api.csproj", "{9B7D8766-6FEF-46A7-8866-4A40EE4B1D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Api", "WebChat.Api\WebChat.Api.csproj", "{9B7D8766-6FEF-46A7-8866-4A40EE4B1D7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Application", "WebChat.Application\WebChat.Application.csproj", "{24AE1811-52FD-45BE-AD1A-8D86067B5032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Application", "WebChat.Application\WebChat.Application.csproj", "{24AE1811-52FD-45BE-AD1A-8D86067B5032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Domain", "WebChat.Domain\WebChat.Domain.csproj", "{58D567C7-ACA4-4919-A277-D0D4EB0B1CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Domain", "WebChat.Domain\WebChat.Domain.csproj", "{58D567C7-ACA4-4919-A277-D0D4EB0B1CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Infra", "WebChat.Infra\WebChat.Infra.csproj", "{FCFD51EB-624F-4D08-BF50-4918BE387386}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Infra", "WebChat.Infra\WebChat.Infra.csproj", "{FCFD51EB-624F-4D08-BF50-4918BE387386}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Security.Domain", "WebChat.Security.Domain\WebChat.Security.Domain.csproj", "{43960821-56D3-4D9C-BB9C-C57910A45EFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FCFD51EB-624F-4D08-BF50-4918BE387386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCFD51EB-624F-4D08-BF50-4918BE387386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCFD51EB-624F-4D08-BF50-4918BE387386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43960821-56D3-4D9C-BB9C-C57910A45EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43960821-56D3-4D9C-BB9C-C57910A45EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43960821-56D3-4D9C-BB9C-C57910A45EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43960821-56D3-4D9C-BB9C-C57910A45EFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
