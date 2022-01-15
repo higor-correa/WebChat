@@ -6,6 +6,6 @@ public class ChatHub : Hub
 {
     public async Task SendMessage(string channel, string user, string message)
     {
-        await Clients.Group(channel).SendAsync("ReceiveMessage", user, message);
+        await Clients.All.SendAsync("ReceiveMessage", user, message);
     }
 }
