@@ -1,12 +1,27 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WebChat.Api.Hubs;
 using WebChat.API.Configurations;
+using WebChat.Application.Services.Security;
+using WebChat.Application.Services.Users;
+using WebChat.Domain.Employees.Interfaces;
+using WebChat.Domain.Users.Interfaces;
+using WebChat.Domain.Users.Services;
 using WebChat.Infra;
+using WebChat.Infra.Repositories;
+using WebChat.Security.Domain;
+using WebChat.Security.Domain.Configurations;
+using WebChat.Security.Domain.Interfaces;
+using WebChat.Security.Domain.Tokens.Interfaces;
+using WebChat.Security.Domain.Tokens.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.ConfigureLogging(x => x.AddConsole());
+
+builder.Services.AddOptions<JwtSettings>().Bind(builder.Configuration.GetSection("JwtSettings"));
 
 builder.Services.AddCors(options =>
 {
@@ -24,14 +39,26 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
 
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(options =>
+    .AddJwtBearer(opt =>
     {
-        options.Events = new JwtBearerEvents
+        opt.TokenValidationParameters = new()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+        };
+
+        opt.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
             {
@@ -47,7 +74,23 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+
+builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase("Teste"));
+
+#region Microservice DI
+builder.Services.AddScoped<ContextMiddleware>();
+builder.Services.AddScoped<ILoginFacade, LoginFacade>();
+builder.Services.AddScoped<ILoginService, LoginService>();
+
+builder.Services.AddScoped<IUserFacade, UserFacade>();
+builder.Services.AddScoped<IUserSearcher, UserSearcher>();
+builder.Services.AddScoped<IUserCreator, UserCreator>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+#endregion
 
 var app = builder.Build();
 
@@ -63,6 +106,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 app.UseAuthorization();
+app.UseAuthentication();
 app.UseMiddleware<ContextMiddleware>();
 app.MapControllers();
 

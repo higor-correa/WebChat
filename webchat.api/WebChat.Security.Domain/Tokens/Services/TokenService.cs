@@ -23,10 +23,8 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim(ClaimTypes.Surname, user.Surname),
+            new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
         };
 
         if (roles.Any())
