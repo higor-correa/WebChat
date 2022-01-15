@@ -26,7 +26,9 @@ builder.Services.AddOptions<JwtSettings>().Bind(builder.Configuration.GetSection
 builder.Services.AddCors(options =>
 {
     options
-        .AddPolicy("ChatHubCORS", builder => builder.WithOrigins("http://localhost:3000/")
+        .AddPolicy(
+            "ChatHubCORS", 
+            corsBuilder => corsBuilder.WithOrigins(builder.Configuration.GetSection("WebChatWeb:Paths").Get<List<string>>().ToArray())
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()
@@ -75,7 +77,7 @@ builder.Services.AddAuthentication(options =>
     });
 
 
-builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase("Teste"));
+builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase(nameof(WebChatContext)));
 
 #region Microservice DI
 builder.Services.AddScoped<ContextMiddleware>();
