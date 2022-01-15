@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  webchatapi:
+    container_name: webchatapi
+    build: ./webchat.api
+    ports:
+      - 8090:80
+      - 8091:443
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+
+  webchatweb:
+    container_name: webchatweb
+    build: ./webchat.chat
+    ports:
+      - 8080:80
