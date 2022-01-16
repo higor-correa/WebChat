@@ -1,16 +1,43 @@
 version: "3.7"
 
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9.12-management
+    ports:
+      - 15672:15672
+      - 5672:5672 
+      - 25676:25676
+
   webchatapi:
     container_name: webchatapi
-    build: ./webchat.api
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: DockerfileWebChatApi
     ports:
       - 8090:80
       - 8091:443
     environment:
       ASPNETCORE_ENVIRONMENT: Docker
-
+    depends_on:
+      - rabbitmq
+  
+  webchatstockapi:
+    container_name: webchatstockapi
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: DockerfileWebChatStockApi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+    depends_on:
+      - rabbitmq
+      - webchatapi
+      
   webchatweb:
+    depends_on:
+      - webchatapi
     container_name: webchatweb
     build: ./webchat.chat
     ports:
