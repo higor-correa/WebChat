@@ -27,7 +27,6 @@ builder.Services.AddScoped<EasyNetQ.AutoSubscribe.IConsumeAsync<SearchStockQuery
 builder.Services.AddScoped<IPublisher, Publisher>();
 builder.Services.AddHostedService<MessagingService>(provider =>
 {
-    var consumer = provider.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider.GetRequiredService<IConsumeAsync<SearchStockQuery>>();
     var service = new MessagingService(
         provider.GetRequiredService<IBus>(), 
         provider.GetRequiredService<IOptions<MessagingSettings>>(), 
