@@ -1,4 +1,5 @@
-﻿using WebChat.Stock.Domain.StockItems.Entities;
+﻿using System.Globalization;
+using WebChat.Stock.Domain.StockItems.Entities;
 using WebChat.Stock.Domain.StockItems.Interfaces;
 
 namespace WebChat.Stock.Gateway.StockItems;
@@ -27,7 +28,7 @@ public class StockItemGateway : IStockItemGateway
                    .Select(x =>
                    {
                        var fields = x.Split(CSV_DELIMITER);
-                       return new StockItem { Code = itemCode, Price = decimal.Parse(fields[CLOSE_PRICE_INDEX]) };
+                       return new StockItem { Code = itemCode, Price = decimal.Parse(fields[CLOSE_PRICE_INDEX], CultureInfo.InvariantCulture) };
                    })
                    .FirstOrDefault(new StockItem { Code = itemCode });
     }
