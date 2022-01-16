@@ -8,6 +8,8 @@ using System.Text;
 using WebChat.Api.Configurations;
 using WebChat.Api.Hubs;
 using WebChat.Api.Messaging.Consumers;
+using WebChat.Application.Services.BOTs;
+using WebChat.Application.Services.BOTs.CommandHandlers;
 using WebChat.Application.Services.Security;
 using WebChat.Application.Services.Users;
 using WebChat.Contracts.Messaging.Stock;
@@ -89,6 +91,8 @@ builder.Services.AddDbContext<WebChatContext>(opt => opt.UseInMemoryDatabase(nam
 builder.Services.AddScoped<ContextMiddleware>();
 builder.Services.AddScoped<ILoginFacade, LoginFacade>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<ICommandParser, CommandParser>();
+builder.Services.AddScoped<ICommandHandler, StockCommandHandler>();
 
 builder.Services.AddScoped<IUserFacade, UserFacade>();
 builder.Services.AddScoped<IUserSearcher, UserSearcher>();
@@ -116,12 +120,6 @@ builder.Services.AddHostedService<MessagingService>(provider =>
 #endregion
 
 var app = builder.Build();
-var publisher = app.Services.CreateScope().ServiceProvider.GetRequiredService<WebChat.Domain.Messaging.IPublisher>();
-while (true)
-{
-    publisher.PublishAsync(new SearchStockQuery { Code = "aapl.us" }).GetAwaiter().GetResult();
-    Thread.Sleep(2000);
-}
 
 app.UseCors("ChatHubCORS");
 

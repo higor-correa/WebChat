@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\webchat.contracts\WebChat.Contracts.csproj" />
     <ProjectReference Include="..\WebChat.Domain\WebChat.Domain.csproj" />
     <ProjectReference Include="..\WebChat.Security.Domain\WebChat.Security.Domain.csproj" />
   </ItemGroup>
