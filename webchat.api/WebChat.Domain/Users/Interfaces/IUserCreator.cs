@@ -1,7 +1,7 @@
 ﻿using WebChat.Domain.Users.DTOs;
 using WebChat.Domain.Users.Entities;
 
-namespace WebChat.Domain.Employees.Interfaces;
+namespace WebChat.Domain.Users.Interfaces;
 
 public interface IUserCreator
 {

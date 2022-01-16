@@ -4,20 +4,20 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>7c9c0d5d-1387-451e-98a8-fd016981653b</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="EasyNetQ" Version="6.3.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0" />
-  </ItemGroup>
+	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\webchat.contracts\WebChat.Contracts.csproj" />
 		<ProjectReference Include="..\WebChat.Application\WebChat.Application.csproj" />
 		<ProjectReference Include="..\WebChat.Infra\WebChat.Infra.csproj" />
 	</ItemGroup>

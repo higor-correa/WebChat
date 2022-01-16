@@ -1,3 +1,4 @@
+using EasyNetQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -6,10 +7,11 @@ using WebChat.Api.Hubs;
 using WebChat.API.Configurations;
 using WebChat.Application.Services.Security;
 using WebChat.Application.Services.Users;
-using WebChat.Domain.Employees.Interfaces;
+using WebChat.Domain.Messaging;
 using WebChat.Domain.Users.Interfaces;
 using WebChat.Domain.Users.Services;
 using WebChat.Infra;
+using WebChat.Infra.Messaging;
 using WebChat.Infra.Repositories;
 using WebChat.Security.Domain;
 using WebChat.Security.Domain.Configurations;
@@ -22,12 +24,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureLogging(x => x.AddConsole());
 
 builder.Services.AddOptions<JwtSettings>().Bind(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.AddOptions<MessagingSettings>().Bind(builder.Configuration.GetSection("MessagingSettings"));
 
 builder.Services.AddCors(options =>
 {
     options
         .AddPolicy(
-            "ChatHubCORS", 
+            "ChatHubCORS",
             corsBuilder => corsBuilder.WithOrigins(builder.Configuration.GetSection("WebChatWeb:Paths").Get<List<string>>().ToArray())
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -92,6 +95,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddSingleton<IBus>(RabbitHutch.CreateBus($"host={builder.Configuration["RabbitMQ:Host"]};virtualHost={builder.Configuration["RabbitMQ:VHost"]};username={builder.Configuration["RabbitMQ:Username"]};password={builder.Configuration["RabbitMQ:Password"]}"));
+builder.Services.AddScoped<IPublisher, Publisher>();
 #endregion
 
 var app = builder.Build();

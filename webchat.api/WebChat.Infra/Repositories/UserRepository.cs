@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebChat.Domain.Employees.Interfaces;
 using WebChat.Domain.Users.Entities;
+using WebChat.Domain.Users.Interfaces;
 
 namespace WebChat.Infra.Repositories;
 

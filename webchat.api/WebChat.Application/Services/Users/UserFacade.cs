@@ -1,6 +1,6 @@
-﻿using WebChat.Domain.Employees.Interfaces;
-using WebChat.Domain.Mappings;
+﻿using WebChat.Domain.Mappings;
 using WebChat.Domain.Users.DTOs;
+using WebChat.Domain.Users.Interfaces;
 using WebChat.Security.Domain.Interfaces;
 
 namespace WebChat.Application.Services.Users;
