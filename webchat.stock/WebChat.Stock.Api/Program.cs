@@ -1,5 +1,4 @@
 using EasyNetQ;
-using EasyNetQ.AutoSubscribe;
 using Microsoft.Extensions.Options;
 using WebChat.Contracts.Messaging.Stock;
 using WebChat.Messaging;
