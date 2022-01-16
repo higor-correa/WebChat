@@ -1,6 +1,5 @@
 ﻿using EasyNetQ;
 using Microsoft.Extensions.Options;
-using WebChat.Domain.Messaging;
 using WebChat.Messaging;
 
 namespace WebChat.Infra.Messaging;
