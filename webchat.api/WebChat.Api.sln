@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Security.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Contracts", "..\webchat.contracts\WebChat.Contracts.csproj", "{5F3F4DFD-D2BF-4763-9B87-18311337A857}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{1B2DBA8B-B498-4EED-8AAC-E976C5881A79}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChat.Messaging", "..\webchat.messaging\WebChat.Messaging.csproj", "{F9149011-2CA2-4D84-A156-9906FC03F364}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +49,17 @@ Global
 		{5F3F4DFD-D2BF-4763-9B87-18311337A857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F3F4DFD-D2BF-4763-9B87-18311337A857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F3F4DFD-D2BF-4763-9B87-18311337A857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9149011-2CA2-4D84-A156-9906FC03F364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9149011-2CA2-4D84-A156-9906FC03F364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9149011-2CA2-4D84-A156-9906FC03F364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9149011-2CA2-4D84-A156-9906FC03F364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F3F4DFD-D2BF-4763-9B87-18311337A857} = {1B2DBA8B-B498-4EED-8AAC-E976C5881A79}
+		{F9149011-2CA2-4D84-A156-9906FC03F364} = {1B2DBA8B-B498-4EED-8AAC-E976C5881A79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB81CEF9-7732-4944-BA40-084F5D0775C5}

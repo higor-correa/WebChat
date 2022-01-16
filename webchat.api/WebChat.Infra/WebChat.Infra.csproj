@@ -7,7 +7,6 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="EasyNetQ" Version="6.3.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0" />
@@ -18,6 +17,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <ProjectReference Include="..\..\webchat.messaging\WebChat.Messaging.csproj" />
 	  <ProjectReference Include="..\WebChat.Domain\WebChat.Domain.csproj" />
 	</ItemGroup>
 	

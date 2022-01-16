@@ -1,18 +1,21 @@
 using EasyNetQ;
+using EasyNetQ.AutoSubscribe;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebChat.Api.Configurations;
 using WebChat.Api.Hubs;
-using WebChat.API.Configurations;
+using WebChat.Api.Messaging.Consumers;
 using WebChat.Application.Services.Security;
 using WebChat.Application.Services.Users;
-using WebChat.Domain.Messaging;
+using WebChat.Contracts.Messaging.Stock;
 using WebChat.Domain.Users.Interfaces;
 using WebChat.Domain.Users.Services;
 using WebChat.Infra;
-using WebChat.Infra.Messaging;
 using WebChat.Infra.Repositories;
+using WebChat.Messaging;
 using WebChat.Security.Domain;
 using WebChat.Security.Domain.Configurations;
 using WebChat.Security.Domain.Interfaces;
@@ -96,10 +99,29 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<IBus>(RabbitHutch.CreateBus($"host={builder.Configuration["RabbitMQ:Host"]};virtualHost={builder.Configuration["RabbitMQ:VHost"]};username={builder.Configuration["RabbitMQ:Username"]};password={builder.Configuration["RabbitMQ:Password"]}"));
-builder.Services.AddScoped<IPublisher, Publisher>();
+builder.Services.AddScoped<WebChat.Domain.Messaging.IPublisher, WebChat.Infra.Messaging.Publisher>();
+
+builder.Services.AddTransient<IConsumeAsync<SearchStockQueryResult>, SearchStockQueryResultHandler>();
+builder.Services.AddHostedService<MessagingService>(provider =>
+{
+    var service = new MessagingService(
+        provider.GetRequiredService<IBus>(),
+        provider.GetRequiredService<IOptions<MessagingSettings>>(),
+        provider.GetRequiredService<IServiceScopeFactory>()
+    );
+
+    service.Subscribers += subscriber => subscriber.Subscribe<SearchStockQueryResult>();
+    return service;
+});
 #endregion
 
 var app = builder.Build();
+var publisher = app.Services.CreateScope().ServiceProvider.GetRequiredService<WebChat.Domain.Messaging.IPublisher>();
+while (true)
+{
+    publisher.PublishAsync(new SearchStockQuery { Code = "aapl.us" }).GetAwaiter().GetResult();
+    Thread.Sleep(2000);
+}
 
 app.UseCors("ChatHubCORS");
 

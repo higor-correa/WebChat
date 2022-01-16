@@ -1,6 +1,6 @@
 ﻿using WebChat.Infra;
 
-namespace WebChat.API.Configurations;
+namespace WebChat.Api.Configurations;
 
 public class ContextMiddleware : IMiddleware
 {
